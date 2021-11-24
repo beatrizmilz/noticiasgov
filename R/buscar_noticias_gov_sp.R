@@ -1,4 +1,38 @@
 parse_item_gov_sp <- function(item_lista) {
+  # id -----------------------------------
+
+  classes_div <- item_lista %>%
+    rvest::html_attr("class") %>%
+    stringr::str_split(pattern = " ") %>%
+    purrr::pluck(1)
+
+  id <- classes_div[1] %>% stringr::str_remove("post-")
+
+  categorias <- classes_div %>%
+    tibble::as_tibble() %>%
+    dplyr::filter(stringr::str_starts(value, "category-")) %>%
+    dplyr::mutate(
+      categorias = stringr::str_remove(value, "category-"),
+      categorias = stringr::str_replace_all(categorias, "-", " ")
+    ) %>%
+    dplyr::pull(categorias) %>%
+    knitr::combine_words(sep = ", ", and = "") %>%
+    as.character()
+
+  tags <- classes_div %>%
+    tibble::as_tibble() %>%
+    dplyr::filter(stringr::str_starts(value, "tag-")) %>%
+    dplyr::mutate(
+      tags = stringr::str_remove(value, "tag-"),
+      tags = stringr::str_replace_all(tags, "-", " ")
+    ) %>%
+    dplyr::pull(tags) %>%
+    knitr::combine_words(sep = ", ", and = "") %>%
+    as.character()
+
+
+
+
   # infos ---------------------------------
 
   classe_infos <- item_lista %>%
@@ -15,14 +49,11 @@ parse_item_gov_sp <- function(item_lista) {
 
     data <- data_bruta %>%
       tibble::as_tibble() %>%
-      tidyr::separate(
-        col = value,
-        into = c("data", "horario"),
-        sep = "-"
-      ) %>%
+      tidyr::separate(col = value,
+                      into = c("data", "horario"),
+                      sep = "-") %>%
       dplyr::mutate(dplyr::across(tidyselect::everything(), stringr::str_trim),
-        data = lubridate::dmy(data)
-      )
+                    data = lubridate::dmy(data))
 
 
     classe_titulo <- classe_infos_antigas %>%
@@ -49,14 +80,11 @@ parse_item_gov_sp <- function(item_lista) {
 
     data <- data_bruta %>%
       tibble::as_tibble() %>%
-      tidyr::separate(
-        col = value,
-        into = c("data", "horario"),
-        sep = "-"
-      ) %>%
+      tidyr::separate(col = value,
+                      into = c("data", "horario"),
+                      sep = "-") %>%
       dplyr::mutate(dplyr::across(tidyselect::everything(), stringr::str_trim),
-        data = lubridate::dmy(data)
-      )
+                    data = lubridate::dmy(data))
 
 
     classe_titulo <- classe_infos %>%
@@ -104,10 +132,13 @@ parse_item_gov_sp <- function(item_lista) {
   # retornar tibble ---------------
 
   tibble::tibble(
+    id,
     data,
     url_noticia,
     titulo,
     chamada,
+    categorias,
+    tags,
     img_url,
     img_alt,
     url_noticia_img
@@ -127,13 +158,14 @@ raspar_pagina_gov_sp <- function(num_pagina = 1) {
 
   if (html[1] != "pagina_nao_existe") {
     lista <- html %>%
-      xml2::xml_find_all(xpath = '//*[@class="col-md-8 category-post-list"]')
+      xml2::xml_find_all(xpath = '//div[contains(@class,"type-post")]')
 
+
+    #  item_lista <- lista[[1]]
 
     lista %>%
       purrr::map_dfr(parse_item_gov_sp)
 
-    #  item_lista <- lista[[1]]
   } else {
     usethis::ui_info("A página {url_pagina} não contém notícias")
   }

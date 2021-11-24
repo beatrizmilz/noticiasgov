@@ -4,7 +4,7 @@ library(magrittr)
 devtools::load_all()
 
 # # testando noticias que estao completas
-# raspar_pagina_gov_sp(3) %>% View()
+# raspar_pagina_gov_sp(1) %>% View()
 #
 # # testando noticias incompletas
 # raspar_pagina_gov_sp(9300) %>% View()
@@ -20,6 +20,7 @@ base_noticias_gov_sp <-
   1:pagina_final %>%
   purrr::map_dfr(raspar_pagina_gov_sp) %>%
   janitor::remove_empty(which = "rows")
+
 
 
 
