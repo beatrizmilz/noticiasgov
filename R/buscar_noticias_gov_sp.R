@@ -30,6 +30,10 @@ parse_item_gov_sp <- function(item_lista) {
     knitr::combine_words(sep = ", ", and = "") %>%
     as.character()
 
+  if(length(tags) == 0){
+    tags <- NA
+  }
+
 
 
 
@@ -163,6 +167,8 @@ raspar_pagina_gov_sp <- function(num_pagina = 1) {
 
     #  item_lista <- lista[[1]]
 
+
+    usethis::ui_info("Obtendo notícias da página  {url_pagina} ...")
     lista %>%
       purrr::map_dfr(parse_item_gov_sp)
 
