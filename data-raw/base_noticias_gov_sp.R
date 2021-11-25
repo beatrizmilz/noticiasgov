@@ -3,7 +3,7 @@
 # ## code to prepare `base_noticias_gov_sp` dataset goes here
 # library(magrittr)
 #
-# devtools::load_all()
+# pkgload::load_all()
 #
 #
 # # library(furrr)

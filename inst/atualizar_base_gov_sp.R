@@ -1,5 +1,5 @@
 # Carregar pacote
-devtools::load_all()
+pkgload::load_all()
 
 # atualizar a base de dados
 base_noticias_gov_sp <-

@@ -16,6 +16,7 @@ Imports:
     knitr,
     lubridate,
     magrittr,
+    pkgload,
     purrr,
     readr,
     rvest,
