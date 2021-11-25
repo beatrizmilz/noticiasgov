@@ -221,6 +221,14 @@ remover_aspas_duplicadas <- function(dataset) {
         '""',
         '"'
       )
+    )%>%
+    dplyr::mutate(
+      dplyr::across(
+        .cols = tidyselect:::where(is.character),
+        .fns = stringr::str_replace_all,
+        '\"',
+        '"'
+      )
     )
 }
 
