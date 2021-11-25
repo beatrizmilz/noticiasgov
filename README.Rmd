@@ -18,8 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 
 [![atualiza_dados](https://github.com/beatrizmilz/noticiasgov/actions/workflows/atualizar_dados.yaml/badge.svg)](https://github.com/beatrizmilz/noticiasgov/actions/workflows/atualizar_dados.yaml)
-
-
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 O objetivo deste repositório/pacote é raspar as notícias de portais de noticias governamentais, e disponibilizar em `.csv`.
@@ -27,13 +26,21 @@ O objetivo deste repositório/pacote é raspar as notícias de portais de notici
 ```{r echo=FALSE}
 library(magrittr)
 tibble::tribble(
-  ~estado, ~url_csv, ~cod_r,
+  ~estado, ~nome_site, ~url_site, ~url_csv, ~cod_r, ~freq_action,
   "SP",
+  "Portal do Governo do Estado de São Paulo",
+  "https://www.saopaulo.sp.gov.br/ultimas-noticias/",
   "https://raw.githubusercontent.com/beatrizmilz/noticiasgov/master/inst/base_noticias_gov_sp.csv",
-  '`base_noticias_gov_sp <- readr::read_delim("inst/base_noticias_gov_sp.csv", delim = ";")` '
+  
+  
+  '`base_noticias_gov_sp <- readr::read_delim("inst/base_noticias_gov_sp.csv", delim = ";")` ',
+  "A cada hora"
 ) %>% 
   dplyr::transmute(
-    Bases = glue::glue("[{estado}]({url_csv})"),
+    Estado = estado,
+    Fonte = glue::glue("[{nome_site}]({url_site})"),
+    `Freq. de atualização` = freq_action,
+    `Baixar base` = glue::glue("[`.csv`]({url_csv})"),
     `Código para importar no R` = cod_r
     
   ) %>% 
