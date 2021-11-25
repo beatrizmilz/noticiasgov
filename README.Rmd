@@ -53,9 +53,11 @@ Pesquisar a quantidade de notícias que contém algum termo ao longo do tempo:
 library(ggplot2)
 
 noticias_sp_filtradas <- base_noticias_gov_sp %>%
+  dplyr::mutate(titulo_clean = stringr::str_to_lower(titulo),
+                titulo_clean = abjutils::rm_accent(titulo_clean)) %>% 
   dplyr::filter(
     stringr::str_detect(categorias, "coronavirus") |
-      stringr::str_detect(titulo, "COVID-19|coronavirus|Covid-19")
+      stringr::str_detect(titulo_clean, "covid-19|coronavirus|covid 19")
   )
 
 
@@ -65,9 +67,9 @@ noticias_sp_filtradas %>%
   ggplot() +
   geom_col(aes(x = mes, y = n), fill = "gray") +
   scale_x_date(date_labels = "%m/%y", date_breaks = "2 months") +
-  labs(y = "Quantidade de notícias", x = "Mês e ano") +
+  labs(y = "Quantidade de notícias", x = "Mês/ano", title = "Número de notícias por mês",
+       subtitle = "Notícias publicadas na categoria 'coronavirus', \nou que tem no título alguma das seguintes palavras:  \nCoronavírus, COVID-19, Covid 19") +
   theme_minimal()
 ```
-
 
 
