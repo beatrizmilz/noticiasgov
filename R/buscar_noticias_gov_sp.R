@@ -210,3 +210,17 @@ atualizar_dados_gov_sp <- function(pag_inicial = 1,
     dplyr::select(-hora) %>%
     dplyr::distinct()
 }
+
+
+remover_aspas_duplicadas <- function(dataset) {
+  dataset %>%
+    dplyr::mutate(
+      dplyr::across(
+        .cols = tidyselect:::where(is.character),
+        .fns = stringr::str_replace_all,
+        '""',
+        '"'
+      )
+    )
+}
+
