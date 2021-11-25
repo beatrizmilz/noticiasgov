@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
-O objetivo deste repositório/pacote é raspar as notícias de portais de noticias governamentais, e disponibilizar para análise.
+O objetivo deste repositório/pacote é raspar as notícias de portais de noticias governamentais, e disponibilizar em `.csv`.
 
 ```{r echo=FALSE}
 library(magrittr)
@@ -38,6 +38,35 @@ tibble::tribble(
     
   ) %>% 
   knitr::kable()
+```
+## Exemplo dos dados disponíveis
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+base_noticias_gov_sp <- readr::read_delim("inst/base_noticias_gov_sp.csv", delim = ";")
+
+dplyr::glimpse(base_noticias_gov_sp)
+```
+Pesquisar a quantidade de notícias que contém algum termo ao longo do tempo:
+
+
+```{r grafico-sp-covid-noticias, echo=TRUE, dpi=300}
+library(ggplot2)
+
+noticias_sp_filtradas <- base_noticias_gov_sp %>%
+  dplyr::filter(
+    stringr::str_detect(categorias, "coronavirus") |
+      stringr::str_detect(titulo, "COVID-19|coronavirus|Covid-19")
+  )
+
+
+noticias_sp_filtradas %>%
+  dplyr::mutate(mes = lubridate::floor_date(data, unit = "month")) %>%
+  dplyr::count(mes) %>%
+  ggplot() +
+  geom_col(aes(x = mes, y = n), fill = "gray") +
+  scale_x_date(date_labels = "%m/%y", date_breaks = "2 months") +
+  labs(y = "Quantidade de notícias", x = "Mês e ano") +
+  theme_minimal()
 ```
 
 
