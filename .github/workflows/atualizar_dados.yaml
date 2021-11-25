@@ -50,7 +50,6 @@ jobs:
         run: |
           pak::local_install_dev_deps(upgrade = TRUE)
           pak::local_install(".")
-          pak::local_install("app/")
         shell: Rscript {0}
 
       - name: Execute Script
