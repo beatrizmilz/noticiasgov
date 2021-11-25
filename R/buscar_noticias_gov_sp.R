@@ -182,7 +182,7 @@ atualizar_dados_gov_sp <- function(pag_inicial = 1,
     readr::read_delim(
       "https://raw.githubusercontent.com/beatrizmilz/noticiasgov/master/inst/base_noticias_gov_sp.csv",
       delim = ";",
-      escape_double = FALSE,
+      escape_double = TRUE,
       col_types = readr::cols(data = readr::col_date(format = "%Y-%m-%d")),
       trim_ws = TRUE
     ) %>%
