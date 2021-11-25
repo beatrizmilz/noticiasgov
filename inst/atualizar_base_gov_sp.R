@@ -18,10 +18,10 @@ base_noticias_gov_sp[base_noticias_gov_sp$id == "5434704", "chamada"]
 base_noticias_gov_sp_atualizada <-
   atualizar_dados_gov_sp(pag_inicial = 1, pag_final = 2) %>%
   remover_aspas_duplicadas() %>%
-  remover_aspas_duplicadas() %>%
-  remover_aspas_duplicadas() %>%
-  remover_aspas_duplicadas() %>%
-  remover_aspas_duplicadas() %>%
+  # remover_aspas_duplicadas() %>%
+  # remover_aspas_duplicadas() %>%
+  # remover_aspas_duplicadas() %>%
+  # remover_aspas_duplicadas() %>%
   remover_aspas_duplicadas()
 
 # verificar como ta

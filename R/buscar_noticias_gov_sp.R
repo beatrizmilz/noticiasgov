@@ -53,14 +53,11 @@ parse_item_gov_sp <- function(item_lista) {
 
     data <- data_bruta %>%
       tibble::as_tibble() %>%
-      tidyr::separate(
-        col = value,
-        into = c("data", "horario"),
-        sep = "-"
-      ) %>%
+      tidyr::separate(col = value,
+                      into = c("data", "horario"),
+                      sep = "-") %>%
       dplyr::mutate(dplyr::across(tidyselect::everything(), stringr::str_trim),
-        data = lubridate::dmy(data)
-      )
+                    data = lubridate::dmy(data))
 
 
     classe_titulo <- classe_infos_antigas %>%
@@ -87,14 +84,11 @@ parse_item_gov_sp <- function(item_lista) {
 
     data <- data_bruta %>%
       tibble::as_tibble() %>%
-      tidyr::separate(
-        col = value,
-        into = c("data", "horario"),
-        sep = "-"
-      ) %>%
+      tidyr::separate(col = value,
+                      into = c("data", "horario"),
+                      sep = "-") %>%
       dplyr::mutate(dplyr::across(tidyselect::everything(), stringr::str_trim),
-        data = lubridate::dmy(data)
-      )
+                    data = lubridate::dmy(data))
 
 
     classe_titulo <- classe_infos %>%
@@ -221,14 +215,13 @@ remover_aspas_duplicadas <- function(dataset) {
         '""',
         '"'
       )
-    )%>%
+    ) %>%
     dplyr::mutate(
       dplyr::across(
         .cols = tidyselect:::where(is.character),
         .fns = stringr::str_replace_all,
-        '\"',
-        '"'
+        '\"\"',
+        '\"'
       )
     )
 }
-
