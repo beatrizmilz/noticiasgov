@@ -30,7 +30,7 @@ parse_item_gov_sp <- function(item_lista) {
     knitr::combine_words(sep = ", ", and = "") %>%
     as.character()
 
-  if(length(tags) == 0){
+  if (length(tags) == 0) {
     tags <- NA
   }
 
@@ -53,11 +53,14 @@ parse_item_gov_sp <- function(item_lista) {
 
     data <- data_bruta %>%
       tibble::as_tibble() %>%
-      tidyr::separate(col = value,
-                      into = c("data", "horario"),
-                      sep = "-") %>%
+      tidyr::separate(
+        col = value,
+        into = c("data", "horario"),
+        sep = "-"
+      ) %>%
       dplyr::mutate(dplyr::across(tidyselect::everything(), stringr::str_trim),
-                    data = lubridate::dmy(data))
+        data = lubridate::dmy(data)
+      )
 
 
     classe_titulo <- classe_infos_antigas %>%
@@ -84,11 +87,14 @@ parse_item_gov_sp <- function(item_lista) {
 
     data <- data_bruta %>%
       tibble::as_tibble() %>%
-      tidyr::separate(col = value,
-                      into = c("data", "horario"),
-                      sep = "-") %>%
+      tidyr::separate(
+        col = value,
+        into = c("data", "horario"),
+        sep = "-"
+      ) %>%
       dplyr::mutate(dplyr::across(tidyselect::everything(), stringr::str_trim),
-                    data = lubridate::dmy(data))
+        data = lubridate::dmy(data)
+      )
 
 
     classe_titulo <- classe_infos %>%
@@ -171,8 +177,36 @@ raspar_pagina_gov_sp <- function(num_pagina = 1) {
     usethis::ui_info("Obtendo notícias da página  {url_pagina} ...")
     lista %>%
       purrr::map_dfr(parse_item_gov_sp)
-
   } else {
     usethis::ui_info("A página {url_pagina} não contém notícias")
   }
+}
+
+atualizar_dados_gov_sp <- function(pag_inicial = 1,
+                                   pag_final = 3) {
+  base_noticias_gov_sp <-
+    readr::read_delim(
+      "inst/base_noticias_gov_sp.csv",
+      delim = ";",
+      escape_double = FALSE,
+      col_types = readr::cols(data = readr::col_date(format = "%Y-%m-%d")),
+      trim_ws = TRUE
+    ) %>%
+    dplyr::mutate(id = as.character(id))
+
+
+  pag_inicial:pag_final %>%
+    purrr::map_dfr(raspar_pagina_gov_sp) %>%
+    janitor::remove_empty(which = "rows") %>%
+    dplyr::bind_rows(base_noticias_gov_sp) %>%
+    dplyr::mutate(dplyr::across(
+      .cols = c(titulo, chamada, categorias, img_alt),
+      .fns = stringr::str_replace_all,
+      ";",
+      "."
+    )) %>%
+    dplyr::mutate(hora = lubridate::hm(horario)) %>%
+    dplyr::arrange(desc(data), desc(hora)) %>%
+    dplyr::select(-hora) %>%
+    dplyr::distinct()
 }
