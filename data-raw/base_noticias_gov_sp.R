@@ -1,3 +1,5 @@
+# DEPRECATED
+
 # ## code to prepare `base_noticias_gov_sp` dataset goes here
 # library(magrittr)
 #

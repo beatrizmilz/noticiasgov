@@ -12,10 +12,12 @@ RoxygenNote: 7.1.2
 Imports: 
     dplyr,
     glue,
+    janitor,
     knitr,
     lubridate,
     magrittr,
     purrr,
+    readr,
     rvest,
     stringr,
     tibble,
