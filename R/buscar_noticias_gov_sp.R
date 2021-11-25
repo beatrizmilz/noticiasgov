@@ -202,26 +202,26 @@ atualizar_dados_gov_sp <- function(pag_inicial = 1,
     dplyr::mutate(hora = lubridate::hm(horario)) %>%
     dplyr::arrange(desc(data), desc(hora)) %>%
     dplyr::select(-hora) %>%
-    dplyr::distinct()
+    dplyr::distinct(id, data, horario, .keep_all = TRUE)
 }
 
 
-remover_aspas_duplicadas <- function(dataset) {
-  dataset %>%
-    dplyr::mutate(
-      dplyr::across(
-        .cols = tidyselect:::where(is.character),
-        .fns = stringr::str_replace_all,
-        '""',
-        '"'
-      )
-    ) %>%
-    dplyr::mutate(
-      dplyr::across(
-        .cols = tidyselect:::where(is.character),
-        .fns = stringr::str_replace_all,
-        '\"\"',
-        '\"'
-      )
-    )
-}
+# remover_aspas_duplicadas <- function(dataset) {
+#   dataset %>%
+#     dplyr::mutate(
+#       dplyr::across(
+#         .cols = tidyselect:::where(is.character),
+#         .fns = stringr::str_replace_all,
+#         '""',
+#         '"'
+#       )
+#     ) %>%
+#     dplyr::mutate(
+#       dplyr::across(
+#         .cols = tidyselect:::where(is.character),
+#         .fns = stringr::str_replace_all,
+#         '\"\"',
+#         '\"'
+#       )
+#     )
+# }
