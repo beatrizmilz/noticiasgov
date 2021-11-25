@@ -3,7 +3,7 @@ pkgload::load_all()
 
 base_noticias_gov_sp <-
   readr::read_delim(
-    "inst/base_noticias_gov_sp.csv",
+    "https://raw.githubusercontent.com/beatrizmilz/noticiasgov/master/inst/base_noticias_gov_sp.csv",
     delim = ";",
     escape_double = FALSE,
     col_types = readr::cols(data = readr::col_date(format = "%Y-%m-%d")),
