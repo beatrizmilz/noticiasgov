@@ -18,6 +18,7 @@ base_noticias_gov_sp_atualizada <-
   remover_aspas_duplicadas() %>%
   remover_aspas_duplicadas() %>%
   remover_aspas_duplicadas() %>%
+  remover_aspas_duplicadas() %>%
   remover_aspas_duplicadas()
 
 
