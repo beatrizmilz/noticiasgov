@@ -33,7 +33,7 @@ tibble::tribble(
   "https://raw.githubusercontent.com/beatrizmilz/noticiasgov/master/inst/base_noticias_gov_sp.csv",
   
   
-  '`base_noticias_gov_sp <- readr::read_delim("inst/base_noticias_gov_sp.csv", delim = ";")` ',
+  '`base_noticias_gov_sp <- readr::read_delim("https://raw.githubusercontent.com/beatrizmilz/noticiasgov/master/inst/base_noticias_gov_sp.csv", delim = ";")` ',
   "A cada hora"
 ) %>% 
   dplyr::transmute(
@@ -49,7 +49,7 @@ tibble::tribble(
 ## Exemplo dos dados disponíveis
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-base_noticias_gov_sp <- readr::read_delim("inst/base_noticias_gov_sp.csv", delim = ";")
+base_noticias_gov_sp <- readr::read_delim("https://raw.githubusercontent.com/beatrizmilz/noticiasgov/master/inst/base_noticias_gov_sp.csv", delim = ";")
 
 dplyr::glimpse(base_noticias_gov_sp)
 ```

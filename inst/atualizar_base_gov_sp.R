@@ -18,7 +18,7 @@ base_noticias_gov_sp_atualizada <-
   atualizar_dados_gov_sp(pag_inicial = 1, pag_final = 1)
 
 # Comparar para escrever a mensagem de commit
-linhas_diferenca <-
+linhas_diferenca_sp <-
   dplyr::anti_join(base_noticias_gov_sp_atualizada,
                    base_noticias_gov_sp) %>% nrow()
 
@@ -26,8 +26,8 @@ linhas_diferenca <-
 commit_message <-
   paste0(
     "[GitHub Actions] Atualizando noticias. ",
-    linhas_diferenca,
-    " novas linhas adicionadas na base."
+    linhas_diferenca_sp,
+    " novas  notícias adicionadas na base de notícias de São Paulo."
   )
 
 # salvar a mensagem de commit
