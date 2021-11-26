@@ -34,7 +34,7 @@ tibble::tribble(
   
   
   '`base_noticias_gov_sp <- readr::read_delim("https://raw.githubusercontent.com/beatrizmilz/noticiasgov/master/inst/base_noticias_gov_sp.csv", delim = ";")` ',
-  "A cada hora"
+  "A cada 6 horas"
 ) %>% 
   dplyr::transmute(
     Estado = estado,

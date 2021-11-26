@@ -15,7 +15,7 @@ noticias governamentais, e disponibilizar em `.csv`.
 
 | Estado | Fonte                                                                                        | Freq. de atualização | Baixar base                                                                                              | Código para importar no R                                                                                                                                  |
 |:-------|:---------------------------------------------------------------------------------------------|:---------------------|:---------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| SP     | [Portal do Governo do Estado de São Paulo](https://www.saopaulo.sp.gov.br/ultimas-noticias/) | A cada hora          | [`.csv`](https://raw.githubusercontent.com/beatrizmilz/noticiasgov/master/inst/base_noticias_gov_sp.csv) | `base_noticias_gov_sp <- readr::read_delim("https://raw.githubusercontent.com/beatrizmilz/noticiasgov/master/inst/base_noticias_gov_sp.csv", delim = ";")` |
+| SP     | [Portal do Governo do Estado de São Paulo](https://www.saopaulo.sp.gov.br/ultimas-noticias/) | A cada 6 horas       | [`.csv`](https://raw.githubusercontent.com/beatrizmilz/noticiasgov/master/inst/base_noticias_gov_sp.csv) | `base_noticias_gov_sp <- readr::read_delim("https://raw.githubusercontent.com/beatrizmilz/noticiasgov/master/inst/base_noticias_gov_sp.csv", delim = ";")` |
 
 ## Exemplo dos dados disponíveis
 
