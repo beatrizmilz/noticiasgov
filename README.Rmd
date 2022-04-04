@@ -53,7 +53,9 @@ base_noticias_gov_sp <- readr::read_delim("https://raw.githubusercontent.com/bea
 
 dplyr::glimpse(base_noticias_gov_sp)
 ```
-Pesquisar a quantidade de notícias que contém algum termo ao longo do tempo:
+
+
+Pesquisar as notícias que contém algum termo ao longo do tempo:
 
 
 ```{r grafico-sp-covid-noticias, echo=TRUE, dpi=300}
@@ -63,20 +65,13 @@ noticias_sp_filtradas <- base_noticias_gov_sp %>%
   dplyr::mutate(titulo_clean = stringr::str_to_lower(titulo),
                 titulo_clean = abjutils::rm_accent(titulo_clean)) %>% 
   dplyr::filter(
-    stringr::str_detect(categorias, "coronavirus") |
-      stringr::str_detect(titulo_clean, "covid-19|coronavirus|covid 19")
+      stringr::str_detect(titulo_clean, "rio pinheiros")
   )
 
-
-noticias_sp_filtradas %>%
-  dplyr::mutate(mes = lubridate::floor_date(data, unit = "month")) %>%
-  dplyr::count(mes) %>%
-  ggplot() +
-  geom_col(aes(x = mes, y = n), fill = "gray") +
-  scale_x_date(date_labels = "%m/%y", date_breaks = "2 months") +
-  labs(y = "Quantidade de notícias", x = "Mês/ano", title = "Número de notícias por mês",
-       subtitle = "Notícias publicadas na categoria 'coronavirus', \nou que tem no título alguma das seguintes palavras:  \nCoronavírus, COVID-19, Covid 19") +
-  theme_minimal()
+noticias_sp_filtradas |> 
+  dplyr::mutate(titulo_url = glue::glue("[{titulo}]({url_noticia})")) |> 
+    dplyr::select(data, titulo_url) |> 
+  knitr::kable()
 ```
 
 
